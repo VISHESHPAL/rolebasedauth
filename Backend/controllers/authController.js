@@ -61,8 +61,10 @@ export const login = async (req, res) => {
     const token = generateToken(user._id);
 
     res.cookie("token", token, {
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000 
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.json({
@@ -72,14 +74,13 @@ export const login = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      token
+      token,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 export const isLoggedIn = (req, res) => {
   if (req.user) {
@@ -90,19 +91,19 @@ export const isLoggedIn = (req, res) => {
         _id: req.user._id,
         name: req.user.name,
         email: req.user.email,
-        role: req.user.role
-      }
+        role: req.user.role,
+      },
     });
   }
   res.status(401).json({ success: false, message: "Not logged in" });
 };
 
-
 export const logout = (req, res) => {
   res.clearCookie("token", {
-    secure: true,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
   });
 
   res.json({ success: true, message: "Logged out successfully" });
 };
-
