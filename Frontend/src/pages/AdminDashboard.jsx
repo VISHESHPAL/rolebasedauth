@@ -1,32 +1,97 @@
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import { Users, Settings, UserCog } from "lucide-react";
 
 const AdminDashboard = () => {
-  return (<>
-     <Navbar/>
-    <div className="flex flex-col items-center mt-2 min-h-screen bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-2xl text-center">
-        <h1 className="text-3xl font-bold text-red-500 mb-4">
-          Admin Dashboard
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Welcome, Admin! You have full access to manage users, managers, and
-          system settings.
-        </p>
+  const [activeSection, setActiveSection] = useState("users");
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <button className="bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
-            Manage Users
-          </button>
-          <button className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
-            Manage Managers
-          </button>
-          <button className="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
-            System Settings
-          </button>
-        </div>
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <Navbar />
+
+      <div className="flex flex-1">
+        <aside className="w-64 bg-gray-900 text-white p-6 space-y-6">
+          <h2 className="text-xl font-bold border-b border-gray-700 pb-3">
+            Admin Panel
+          </h2>
+          <nav className="space-y-3">
+            <button
+              onClick={() => setActiveSection("users")}
+              className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
+                activeSection === "users"
+                  ? "bg-red-500"
+                  : "hover:bg-gray-800"
+              }`}
+            >
+              <Users size={20} /> Manage Users
+            </button>
+
+            <button
+              onClick={() => setActiveSection("managers")}
+              className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
+                activeSection === "managers"
+                  ? "bg-blue-500"
+                  : "hover:bg-gray-800"
+              }`}
+            >
+              <UserCog size={20} /> Manage Managers
+            </button>
+
+            <button
+              onClick={() => setActiveSection("settings")}
+              className={`flex items-center gap-3 w-full px-4 py-2 rounded-lg transition ${
+                activeSection === "settings"
+                  ? "bg-green-500"
+                  : "hover:bg-gray-800"
+              }`}
+            >
+              <Settings size={20} /> System Settings
+            </button>
+          </nav>
+        </aside>
+
+        <main className="flex-1 p-8">
+          {activeSection === "users" && (
+            <section>
+              <h1 className="text-3xl font-bold text-red-500 mb-4">
+                Manage Users
+              </h1>
+              <div className="bg-white rounded-xl shadow-md p-6">
+                <p className="text-gray-700">
+                  Here you can add, edit, or remove users from the system.
+                </p>
+              </div>
+            </section>
+          )}
+
+          {activeSection === "managers" && (
+            <section>
+              <h1 className="text-3xl font-bold text-blue-500 mb-4">
+                Manage Managers
+              </h1>
+              <div className="bg-white rounded-xl shadow-md p-6">
+                <p className="text-gray-700">
+                  Here you can add, edit, or remove managers from the system.
+                </p>
+              </div>
+            </section>
+          )}
+
+          {activeSection === "settings" && (
+            <section>
+              <h1 className="text-3xl font-bold text-green-500 mb-4">
+                System Settings
+              </h1>
+              <div className="bg-white rounded-xl shadow-md p-6">
+                <p className="text-gray-700">
+                  Configure and update the system settings here.
+                </p>
+              </div>
+            </section>
+          )}
+        </main>
       </div>
     </div>
-     </>
   );
 };
 
