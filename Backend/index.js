@@ -6,21 +6,23 @@ import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
 import managerRouter from "./routes/manager.route.js";
 import adminRouter from "./routes/admin.route.js";
-import cors from 'cors'
+import cors from "cors";
 
 dotenv.config();
 connectDB();
 
-const app = express(); 
+const app = express();
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use(cors({
-  origin: "http://localhost:5173", // Frontend URL
-  credentials: true // Allow cookies
+  origin: process.env.NODE_ENV === "production"
+    ? "https://rolebasedauth-phi.vercel.app"
+    : "http://localhost:5173",
+  credentials: true
 }));
 
-// Routes
+
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/manager", managerRouter);
