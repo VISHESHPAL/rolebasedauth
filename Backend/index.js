@@ -28,5 +28,9 @@ app.use("/api/user", userRouter);
 app.use("/api/manager", managerRouter);
 app.use("/api/admin", adminRouter);
 
+app.get("/", (req, res) =>{
+   res.send("API IS WORKING ")
+})
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
