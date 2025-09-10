@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 const AdminDashboard = () => {
   return (<>
      <Navbar/>
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+    <div className="flex flex-col items-center mt-2 min-h-screen bg-gray-100 p-6">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-2xl text-center">
         <h1 className="text-3xl font-bold text-red-500 mb-4">
           Admin Dashboard
